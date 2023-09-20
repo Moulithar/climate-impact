@@ -28,25 +28,6 @@
           window.addEventListener("load", async_load, false);
         }
       })();
-
-      //for the population of void and source
-
-      function getURLParameter(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-        var results = regex.exec(location.search);
-        return results === null
-          ? ""
-          : decodeURIComponent(results[1].replace(/\+/g, " "));
-      }
-
-      // Get UTM source and UTM campaign parameters from the URL
-      var utmSource = getURLParameter("utm_source");
-      var utmCampaign = getURLParameter("utm_campaign");
-
-      // Populate the input fields with the extracted values
-      document.getElementById("utm_source").value = utmSource;
-      document.getElementById("utm_campaign").value = utmCampaign;
     </script>
   </head>
   <body>
@@ -601,7 +582,8 @@
                     value=""
                   />
                 </p>
-
+                <h1>Current URL:</h1>
+                <p id="current-url"></p>
                 <div
                   id="error_for_972473_87598pi_972473_87598"
                   style="display: none"
@@ -756,7 +738,7 @@
               </script>
 
               <!-- new script -->
-              <script>
+              <!-- <script>
                 // Get the URL parameters
                 const urlParams = new URLSearchParams(window.location.search);
 
@@ -769,8 +751,31 @@
                   utmSource || "";
                 document.getElementById("utmCampaignInput").value =
                   utmCampaign || "";
-              </script>
+              </script> -->
               <script>
+                const urlParams = new URLSearchParams(window.location.search);
+
+                // Get the value of "utm_source" parameter from the URL
+                const utmSource = urlParams.get("utm_source");
+
+                // Get the value of "utm_campaign" parameter from the URL
+                const utmCampaign = urlParams.get("utm_campaign");
+
+                // Find the input fields by their IDs
+                const utmSourceInput = document.getElementById("utm_source");
+                const utmCampaignInput =
+                  document.getElementById("utm_campaign");
+
+                // Set the values in the input fields
+                if (utmSourceInput) {
+                  utmSourceInput.value = utmSource || "Void";
+                }
+
+                if (utmCampaignInput) {
+                  utmCampaignInput.value = utmCampaign || "Javas";
+                }
+              </script>
+              <!-- <script>
                 // Get the input fields by their IDs
                 const campaignInput = document.getElementById(
                   "972473_87676pi_972473_87676"
@@ -782,7 +787,7 @@
                 // Set the values of the input fields
                 campaignInput.value = "java"; // Populate the campaign input field with 'java'
                 sourceInput.value = "void"; // Populate the source input field with 'void'
-              </script>
+              </script> -->
             </div>
           </div>
         </div>
@@ -877,6 +882,16 @@
               })();
             });
           })();
+        </script>
+        <script>
+          // Get the current URL
+          const currentUrl = window.location.href;
+
+          // Find the HTML element where you want to display the URL
+          const urlElement = document.getElementById("current-url");
+
+          // Set the text content of the element to the current URL
+          urlElement.textContent = currentUrl;
         </script>
       </div>
     </div>
